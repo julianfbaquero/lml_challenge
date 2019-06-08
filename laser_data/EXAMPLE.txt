@@ -1,0 +1,45 @@
+import csv
+import numpy as np
+
+# CSV file path
+DATA_PATH = '../laser_data/DataTrain.csv'
+LABEL_PATH = '../laser_data/LabelsTrain.csv'
+
+# Main data tensor
+X = np.array([])
+Y = np.array([])
+
+
+# Read CSV data
+with open(DATA_PATH) as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	for row in csv_reader:
+		tmp_row = np.zeros((1, len(row)))
+		i = 0
+		for col in row:
+			try:
+				tmp_row[0, i] = float(col)
+			except:
+				print('Ha habido un inconveniente leyendo el archivo.')
+			i += 1
+		X = np.vstack([X, tmp_row]) if X.size else tmp_row
+
+print( X.shape )
+
+
+# Read CSV data
+with open(LABEL_PATH) as csv_file:
+	csv_reader = csv.reader(csv_file, delimiter=',')
+	for row in csv_reader:
+		tmp_row = np.zeros((1, len(row)))
+		i = 0
+		for col in row:
+			try:
+				tmp_row[0, i] = float(col)
+			except:
+				print('Ha habido un inconveniente leyendo el archivo.')
+			i += 1
+		Y = np.vstack([Y, tmp_row]) if Y.size else tmp_row
+
+Y = Y.flatten()
+print(Y.shape)
